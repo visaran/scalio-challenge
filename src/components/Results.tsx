@@ -28,7 +28,6 @@ const Results: FunctionComponent<ResultsProps> = ({
       <Table
         columns={columns}
         pagination={{
-          pageSize: 9,
           total: totalCount,
           onChange: onPageChange,
           current: page,
