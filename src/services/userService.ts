@@ -7,10 +7,8 @@ interface ISearchUser {
 }
 
 export const userService = {
-  searchUsers: (params: ISearchUser) =>
+  searchUsers: ({ login, currentPage, perPage }: ISearchUser) =>
     apiClient.get(
-      `/search/users?q=${
-        params.login
-      } in:login&per_page=${(params.perPage = 9)}&page=${params.currentPage}`
+      `/search/users?q=${login} in:login&per_page=${(perPage = 9)}&page=${currentPage}`
     ),
 };
