@@ -22,7 +22,10 @@ export const HomePage: FunctionComponent = () => {
   const searchUsers = async (query: string, pageNum: number) => {
     setLoading(true);
     try {
-      const { data } = await userService.searchUsers(query, pageNum);
+      const { data } = await userService.searchUsers({
+        login: query,
+        currentPage: pageNum,
+      });
       setData(data);
     } catch (err: any) {
       const { message, documentation_url } = err.response.data;
