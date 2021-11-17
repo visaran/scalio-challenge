@@ -1,18 +1,16 @@
 import React, { FunctionComponent, useContext, useState } from "react";
-import { UsersContext } from "../pages/HomePage";
 import { Table } from "antd";
+import { IUserAPIResponse } from "../types/api";
 
-interface ResultsProps {}
+interface ResultsProps {
+  data: IUserAPIResponse;
+}
 
-const Results: FunctionComponent<ResultsProps> = () => {
-  const [currentPage, setCurrentPage] = useState<number>(0);
+const Results: FunctionComponent<ResultsProps> = ({ data }) => {
+  const [currentPage, setCurrentPage] = useState<number>(1);
 
-  const { users } = useContext(UsersContext);
-
-  console.log("users", users);
-
-  function onChange() {
-    setCurrentPage(currentPage + 1);
+  function onChange(page: number) {
+    setCurrentPage(page);
     console.log("currentPage", currentPage);
   }
 
@@ -21,21 +19,20 @@ const Results: FunctionComponent<ResultsProps> = () => {
     { title: "Login", key: "id", dataIndex: "login" },
     { title: "Type", key: "id", dataIndex: "type" },
   ];
+
   return (
     <div>
-      {users && users.length ? (
-        <Table
-          columns={columns}
-          pagination={{
-            pageSize: 9,
-            total: 100,
-            onChange: () => onChange(),
-            current: currentPage,
-          }}
-          loading={{ spinning: !Boolean(users.length) }}
-          dataSource={users}
-        />
-      ) : null}
+      <Table
+        columns={columns}
+        pagination={{
+          pageSize: 9,
+          total: data["total_count"],
+          onChange: (page) => onChange(page),
+          current: currentPage,
+        }}
+        // loading={{ spinning: !Boolean(data.items.length) }}
+        dataSource={data.items}
+      />
     </div>
   );
 };
