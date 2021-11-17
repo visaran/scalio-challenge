@@ -1,4 +1,4 @@
-import React, { Fragment, FunctionComponent, useState } from "react";
+import React, { Fragment, FunctionComponent, useEffect, useState } from "react";
 import Results from "../components/Results";
 import Search from "../components/Search";
 import { userService } from "../services/userService";
@@ -7,6 +7,7 @@ import { APIErrorNotification } from "../utils/notifications";
 
 export const HomePage: FunctionComponent = () => {
   const [login, setLogin] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
   const [page, setPage] = useState<number>(1);
   const [data, setData] = useState<IUserAPIResponse>({
     incomplete_results: false,
@@ -14,23 +15,32 @@ export const HomePage: FunctionComponent = () => {
     total_count: 0,
   });
 
-  function handleQueryChange(e: React.ChangeEvent<HTMLInputElement>) {
+  const handleQueryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setLogin(e.target.value);
-  }
+  };
 
-  async function handleSearch(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
+  const searchUsers = async (query: string, pageNum: number) => {
+    setLoading(true);
     try {
-      const { data } = await userService.searchUsers(login, page);
+      const { data } = await userService.searchUsers(query, pageNum);
       setData(data);
     } catch (err: any) {
       const { message, documentation_url } = err.response.data;
       APIErrorNotification(message, documentation_url);
+    } finally {
+      setLoading(false);
     }
-  }
+  };
+
+  const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    page > 1 ? searchUsers(login, 1) : searchUsers(login, page);
+    setPage(1);
+  };
 
   const handlePageChange = (pageNumber: number) => {
     setPage(pageNumber);
+    searchUsers(login, pageNumber);
   };
 
   const RenderResults = () => {
@@ -38,6 +48,7 @@ export const HomePage: FunctionComponent = () => {
     return (
       <Results
         page={page}
+        loading={loading}
         onPageChange={handlePageChange}
         users={data.items}
         totalCount={data["total_count"]}

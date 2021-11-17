@@ -4,21 +4,19 @@ import { IUser } from "../types/user";
 
 interface ResultsProps {
   page: number;
+  loading: boolean;
   users: IUser[];
   totalCount: number;
   onPageChange: (pageNumber: number) => void;
 }
 
 const Results: FunctionComponent<ResultsProps> = ({
+  page,
+  loading,
   users,
   totalCount,
   onPageChange,
-  page,
 }) => {
-  function onChange(page: number) {
-    onPageChange(page);
-  }
-
   const columns = [
     { title: "Avatar URL", key: "id", dataIndex: "avatar_url" },
     { title: "Login", key: "id", dataIndex: "login" },
@@ -32,10 +30,10 @@ const Results: FunctionComponent<ResultsProps> = ({
         pagination={{
           pageSize: 9,
           total: totalCount,
-          onChange: (page) => onChange(page),
+          onChange: onPageChange,
           current: page,
         }}
-        // loading={{ spinning: !Boolean(data.items.length) }}
+        loading={{ spinning: loading }}
         dataSource={users}
       />
     </div>
