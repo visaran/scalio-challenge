@@ -2,25 +2,20 @@ import axios from "axios";
 import React, { FunctionComponent, useState } from "react";
 
 interface SearchProps {
-  onSearch: (searchValue: string, page?: number) => void;
+  login: string;
+  onSearch: (e: React.FormEvent<HTMLFormElement>) => void;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const Search: FunctionComponent<SearchProps> = ({ onSearch }) => {
-  const [login, setLogin] = useState<string>("");
-
-  async function onSubmitLogin(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    onSearch(login);
-  }
-
+const Search: FunctionComponent<SearchProps> = ({
+  login,
+  onChange,
+  onSearch,
+}) => {
   return (
     <div>
-      <form onSubmit={onSubmitLogin}>
-        <input
-          type="text"
-          value={login}
-          onChange={(e) => setLogin(e.target.value)}
-        />
+      <form onSubmit={onSearch}>
+        <input type="text" value={login} onChange={onChange} />
         <button type="submit">Submit</button>
       </form>
       <div>{login}</div>

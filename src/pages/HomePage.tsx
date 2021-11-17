@@ -1,4 +1,4 @@
-import { Fragment, FunctionComponent, useState } from "react";
+import React, { Fragment, FunctionComponent, useState } from "react";
 import Results from "../components/Results";
 import Search from "../components/Search";
 import { userService } from "../services/userService";
@@ -6,7 +6,7 @@ import { IUserAPIResponse } from "../types/api";
 import { APIErrorNotification } from "../utils/notifications";
 
 export const HomePage: FunctionComponent = () => {
-  const [query, setQuery] = useState<string>("");
+  const [login, setLogin] = useState<string>("");
   const [page, setPage] = useState<number>(1);
   const [data, setData] = useState<IUserAPIResponse>({
     incomplete_results: false,
@@ -14,19 +14,22 @@ export const HomePage: FunctionComponent = () => {
     total_count: 0,
   });
 
-  const handleSearch = async (searchValue: string, page: number = 0) => {
+  function handleQueryChange(e: React.ChangeEvent<HTMLInputElement>) {
+    setLogin(e.target.value);
+  }
+
+  async function handleSearch(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
     try {
-      setQuery(searchValue);
-      const { data } = await userService.searchUsers(searchValue, page);
+      const { data } = await userService.searchUsers(login, page);
       setData(data);
     } catch (err: any) {
       const { message, documentation_url } = err.response.data;
       APIErrorNotification(message, documentation_url);
     }
-  };
+  }
 
   const handlePageChange = (pageNumber: number) => {
-    handleSearch(query, pageNumber);
     setPage(pageNumber);
   };
 
@@ -44,7 +47,11 @@ export const HomePage: FunctionComponent = () => {
 
   return (
     <Fragment>
-      <Search onSearch={handleSearch} />
+      <Search
+        login={login}
+        onChange={handleQueryChange}
+        onSearch={handleSearch}
+      />
       <RenderResults />
     </Fragment>
   );
