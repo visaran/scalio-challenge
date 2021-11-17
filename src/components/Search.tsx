@@ -1,21 +1,22 @@
 import axios from "axios";
-import React, { FunctionComponent, useState } from "react";
+import React, { FunctionComponent, useContext, useState } from "react";
+import { UsersContext } from "../pages/HomePage";
+import { userService } from "../services/userService";
 
 interface SearchProps {}
 
 const Search: FunctionComponent<SearchProps> = () => {
-  const [login, setLogin] = useState("");
-  const [data, setData] = useState([]);
+  const [login, setLogin] = useState<string>("");
+
+  const { setUsers } = useContext(UsersContext);
 
   async function onSubmitLogin(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (!login) return;
 
     async function fetchData() {
-      const { data } = await axios(
-        `https://api.github.com/search/users?q=${login} in:login`
-      );
-      setData(data);
+      const { data } = await userService.searchUsers(login);
+      setUsers(data.items);
     }
     fetchData();
   }
