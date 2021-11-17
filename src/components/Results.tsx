@@ -1,17 +1,22 @@
-import React, { FunctionComponent, useContext, useState } from "react";
+import React, { FunctionComponent, useState } from "react";
 import { Table } from "antd";
-import { IUserAPIResponse } from "../types/api";
+import { IUser } from "../types/user";
 
 interface ResultsProps {
-  data: IUserAPIResponse;
+  page: number;
+  users: IUser[];
+  totalCount: number;
+  onPageChange: (pageNumber: number) => void;
 }
 
-const Results: FunctionComponent<ResultsProps> = ({ data }) => {
-  const [currentPage, setCurrentPage] = useState<number>(1);
-
+const Results: FunctionComponent<ResultsProps> = ({
+  users,
+  totalCount,
+  onPageChange,
+  page,
+}) => {
   function onChange(page: number) {
-    setCurrentPage(page);
-    console.log("currentPage", currentPage);
+    onPageChange(page);
   }
 
   const columns = [
@@ -26,12 +31,12 @@ const Results: FunctionComponent<ResultsProps> = ({ data }) => {
         columns={columns}
         pagination={{
           pageSize: 9,
-          total: data["total_count"],
+          total: totalCount,
           onChange: (page) => onChange(page),
-          current: currentPage,
+          current: page,
         }}
         // loading={{ spinning: !Boolean(data.items.length) }}
-        dataSource={data.items}
+        dataSource={users}
       />
     </div>
   );

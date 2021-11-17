@@ -1,9 +1,8 @@
 import { notification } from "antd";
 
-export const APIErrorNotification = () => {
+export const APIErrorNotification = (message: string, description: string) => {
   notification.open({
-    message: "Something went wrong with the request",
-    description:
-      "An unexpected error ocurred. If it persists, contact the site administrator",
+    message,
+    description,
   });
 };

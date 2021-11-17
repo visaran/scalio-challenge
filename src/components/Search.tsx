@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { FunctionComponent, useState } from "react";
 
 interface SearchProps {
-  onSearch: (login: string) => void;
+  onSearch: (searchValue: string, page?: number) => void;
 }
 
 const Search: FunctionComponent<SearchProps> = ({ onSearch }) => {
