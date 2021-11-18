@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useContext, useState } from "react";
-import { UsersContext } from "../pages/HomePage";
 import { Table } from "antd";
+import { UsersContext } from "../context/UserContext";
 
 interface ResultsProps {}
 
