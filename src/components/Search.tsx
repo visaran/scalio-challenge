@@ -1,12 +1,13 @@
 import axios from "axios";
 import React, { FunctionComponent, useContext, useState } from "react";
-import { UsersContext } from "../pages/HomePage";
+import { UsersContext } from "../context/UserContext";
+import { useFormInput } from "../hooks/useFormInput";
 import { userService } from "../services/userService";
 
 interface SearchProps {}
 
 const Search: FunctionComponent<SearchProps> = () => {
-  const [login, setLogin] = useState<string>("");
+  const login = useFormInput("");
 
   const { setUsers } = useContext(UsersContext);
 
@@ -15,7 +16,7 @@ const Search: FunctionComponent<SearchProps> = () => {
     if (!login) return;
 
     async function fetchData() {
-      const { data } = await userService.searchUsers(login);
+      const { data } = await userService.searchUsers(login.value);
       setUsers(data.items);
     }
     fetchData();
@@ -24,14 +25,9 @@ const Search: FunctionComponent<SearchProps> = () => {
   return (
     <div>
       <form onSubmit={onSubmitLogin}>
-        <input
-          type="text"
-          value={login}
-          onChange={(e) => setLogin(e.target.value)}
-        />
+        <input {...login} />
         <button type="submit">Submit</button>
       </form>
-      <div>{login}</div>
     </div>
   );
 };
