@@ -1,16 +1,16 @@
 import { createContext } from "react";
 import { IUser } from "../entities/User";
 
-interface UsersContextData {
+interface IUserContext {
   users: IUser[];
   setUsers: (users: IUser[]) => void;
 }
 
-export const usersContextDefaultValue: UsersContextData = {
+export const usersContextDefaultValue: IUserContext = {
   users: [],
   setUsers: () => {},
 };
 
-export const UsersContext = createContext<UsersContextData>(
+export const UsersContext = createContext<IUserContext>(
   usersContextDefaultValue
 );
