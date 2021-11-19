@@ -1,6 +1,14 @@
 import { notification } from "antd";
 
-export const APIErrorNotification = (message: string, description: string) => {
+interface INotification {
+  message: string;
+  description?: string;
+}
+
+export const openNotification = ({
+  message,
+  description = "",
+}: INotification) => {
   notification.open({
     message,
     description,
