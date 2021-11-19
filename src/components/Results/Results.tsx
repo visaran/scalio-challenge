@@ -63,6 +63,7 @@ const Results: FunctionComponent<ResultsProps> = () => {
           current: currentPage,
           pageSize: 9,
           onChange: onPageChange,
+          hideOnSinglePage: true,
         }}
         // onChange={onTableChange}
         loading={{ spinning: isLoading }}
