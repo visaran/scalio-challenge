@@ -60,6 +60,7 @@ const searchSlice = createSlice({
       state.totalCount = action.payload.total_count;
     });
     builder.addCase(searchUsers.rejected, (state, action) => {
+      state.isLoading = false;
       console.error(action.error);
       openNotification({
         message: "Error",
