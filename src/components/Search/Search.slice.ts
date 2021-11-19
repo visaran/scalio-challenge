@@ -2,62 +2,70 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { userService } from "../../services/userService";
 import { RootState } from "../../store";
 import { IUser } from "../../types/user";
-import { APIErrorNotification } from "../../utils/notifications";
+import { openNotification } from "../../utils/notifications";
 
 interface ISearchState {
   searchInput: string;
   users: IUser[];
+  posts: any[];
   isLoading: boolean;
   totalCount: number;
   page: number;
+  status: string;
 }
-
-const initialState: ISearchState = {
-  searchInput: "",
-  users: [],
-  isLoading: false,
-  totalCount: 0,
-  page: 1,
-};
 
 export const searchUsers = createAsyncThunk(
   "search/searchUsers",
-  async ({ login, page }: { login: string; page: number }) => {
-    try {
-      const response = await userService.searchUsers({
-        login,
-        page,
-      });
-      return response.data;
-    } finally {
-    }
+  async ({
+    login,
+    page,
+    sort,
+  }: {
+    login: string;
+    page?: number;
+    sort?: string;
+  }) => {
+    const response = await userService.searchUsers({
+      login,
+      page,
+      sort,
+    });
+    return response.data;
   }
 );
 
 const searchSlice = createSlice({
   name: "search",
-  initialState,
+  initialState: {
+    searchInput: "",
+    posts: [],
+    status: "",
+    users: [],
+    isLoading: false,
+    totalCount: 0,
+    page: 1,
+  } as ISearchState,
   reducers: {
     updateSearchInput(state, action) {
       state.searchInput = action.payload;
     },
-    // updatePage(state, action) {
-    //   state.page = action.payload;
-    // },
   },
   extraReducers: (builder) => {
     builder.addCase(searchUsers.pending, (state) => {
       state.isLoading = true;
     });
     builder.addCase(searchUsers.fulfilled, (state, action) => {
-      state.users = action.payload.items;
-      state.totalCount = action.payload.total_count;
       state.isLoading = false;
+      state.users = [...action.payload.items];
+      state.totalCount = action.payload.total_count;
     });
     builder.addCase(searchUsers.rejected, (state, action) => {
-      state.users = [];
-      console.log(action.error.name);
-      APIErrorNotification(action.error.name!, action.error.message!);
+      console.error(action.error);
+      openNotification({
+        message: "Error",
+        description:
+          "There was an error on the server. Trained monkeys are working to fix the issue.",
+      });
     });
   },
 });
