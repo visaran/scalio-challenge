@@ -3,14 +3,12 @@ import { useDispatch, useSelector } from "react-redux";
 import Results from "../components/Results/Results";
 import Search from "../components/Search/Search";
 import {
-  searchSelector,
   searchUsers,
   updateSearchInput,
 } from "../components/Search/Search.slice";
 
 export const HomePage: FunctionComponent = () => {
   const [login, setLogin] = useState<string>("");
-  const { page } = useSelector(searchSelector);
   const dispatch = useDispatch();
 
   const handleQueryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -20,7 +18,7 @@ export const HomePage: FunctionComponent = () => {
   const onSearch = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     dispatch(updateSearchInput(login));
-    dispatch(searchUsers({ login, page }));
+    dispatch(searchUsers({ login, page: 1 }));
   };
 
   const RenderResults = () => {
