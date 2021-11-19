@@ -2,13 +2,13 @@ import { apiClient } from ".";
 
 interface ISearchUser {
   login: string;
-  currentPage?: number;
+  page?: number;
   perPage?: number;
 }
 
 export const userService = {
-  searchUsers: ({ login, currentPage, perPage = 9 }: ISearchUser) =>
+  searchUsers: ({ login, page, perPage = 9 }: ISearchUser) =>
     apiClient.get(
-      `/search/users?q=${login} in:login&per_page=${perPage}&page=${currentPage}`
+      `/search/users?q=${login} in:login&per_page=${perPage}&page=${page}`
     ),
 };

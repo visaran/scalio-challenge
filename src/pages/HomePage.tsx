@@ -1,71 +1,35 @@
 import React, { Fragment, FunctionComponent, useEffect, useState } from "react";
-import Results from "../components/Results";
-import Search from "../components/Search";
-import { userService } from "../services/userService";
-import { IUserAPIResponse } from "../types/api";
-import { APIErrorNotification } from "../utils/notifications";
+import { useDispatch, useSelector } from "react-redux";
+import Results from "../components/Results/Results";
+import Search from "../components/Search/Search";
+import {
+  searchSelector,
+  searchUsers,
+  updateSearchInput,
+} from "../components/Search/Search.slice";
 
 export const HomePage: FunctionComponent = () => {
   const [login, setLogin] = useState<string>("");
-  const [loading, setLoading] = useState<boolean>(false);
-  const [page, setPage] = useState<number>(1);
-  const [data, setData] = useState<IUserAPIResponse>({
-    incomplete_results: false,
-    items: [],
-    total_count: 0,
-  });
+  const { page } = useSelector(searchSelector);
+  const dispatch = useDispatch();
 
   const handleQueryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setLogin(e.target.value);
   };
 
-  const searchUsers = async (query: string, pageNum: number) => {
-    setLoading(true);
-    try {
-      const { data } = await userService.searchUsers({
-        login: query,
-        currentPage: pageNum,
-      });
-      setData(data);
-    } catch (err: any) {
-      const { message, documentation_url } = err.response.data;
-      APIErrorNotification(message, documentation_url);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
+  const onSearch = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    page > 1 ? searchUsers(login, 1) : searchUsers(login, page);
-    setPage(1);
-  };
-
-  const handlePageChange = (pageNumber: number) => {
-    setPage(pageNumber);
-    searchUsers(login, pageNumber);
+    dispatch(updateSearchInput(login));
+    dispatch(searchUsers({ login, page }));
   };
 
   const RenderResults = () => {
-    if (!data?.items.length) return null;
-    return (
-      <Results
-        page={page}
-        loading={loading}
-        onPageChange={handlePageChange}
-        users={data.items}
-        totalCount={data["total_count"]}
-      />
-    );
+    return <Results />;
   };
 
   return (
     <Fragment>
-      <Search
-        login={login}
-        onChange={handleQueryChange}
-        onSearch={handleSearch}
-      />
+      <Search login={login} onChange={handleQueryChange} onSearch={onSearch} />
       <RenderResults />
     </Fragment>
   );

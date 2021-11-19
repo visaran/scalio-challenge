@@ -1,4 +1,3 @@
-import axios from "axios";
 import React, { FunctionComponent, useState } from "react";
 
 interface SearchProps {
