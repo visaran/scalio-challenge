@@ -1,4 +1,10 @@
-import React, { Fragment, FunctionComponent, useEffect, useState } from "react";
+import React, {
+  Fragment,
+  FunctionComponent,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import Results from "../components/Results";
 import Search from "../components/Search";
 import { userService } from "../services/userService";
@@ -19,6 +25,15 @@ export const HomePage: FunctionComponent = () => {
     setLogin(e.target.value);
   };
 
+  const firstUpdate = useRef(true);
+  useEffect(() => {
+    if (firstUpdate.current) {
+      firstUpdate.current = false;
+      return;
+    }
+    searchUsers(login, page);
+  }, [page]);
+
   const searchUsers = async (query: string, pageNum: number) => {
     setLoading(true);
     try {
@@ -37,13 +52,12 @@ export const HomePage: FunctionComponent = () => {
 
   const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    page > 1 ? searchUsers(login, 1) : searchUsers(login, page);
     setPage(1);
+    searchUsers(login, page);
   };
 
   const handlePageChange = (pageNumber: number) => {
     setPage(pageNumber);
-    searchUsers(login, pageNumber);
   };
 
   const RenderResults = () => {
