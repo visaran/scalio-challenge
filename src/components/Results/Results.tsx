@@ -54,8 +54,8 @@ const Results: FunctionComponent<ResultsProps> = () => {
   if (!users.length) return null;
   return (
     <div>
-      {status}
       <Table<IUser>
+        data-testid="results-table"
         rowKey="id"
         rowSelection={{ preserveSelectedRowKeys: false }}
         columns={columns}

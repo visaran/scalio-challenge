@@ -1,11 +1,11 @@
 import React, { Fragment, FunctionComponent, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Results from "../components/Results/Results";
-import Search from "../components/Search/Search";
+import Results from "../../components/Results/Results";
+import Search from "../../components/Search/Search";
 import {
   searchUsers,
   updateSearchInput,
-} from "../components/Search/Search.slice";
+} from "../../components/Search/Search.slice";
 
 export const HomePage: FunctionComponent = () => {
   const [login, setLogin] = useState<string>("");

@@ -13,7 +13,7 @@ const Search: FunctionComponent<SearchProps> = ({
 }) => {
   return (
     <div>
-      <form onSubmit={onSearch}>
+      <form data-testid="search-form" onSubmit={onSearch}>
         <input type="text" value={login} onChange={onChange} />
         <button type="submit">Submit</button>
       </form>

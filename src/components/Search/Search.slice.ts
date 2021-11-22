@@ -4,7 +4,7 @@ import { RootState } from "../../store";
 import { IUser } from "../../types/user";
 import { openNotification } from "../../utils/notifications";
 
-interface ISearchState {
+export interface ISearchState {
   searchInput: string;
   users: IUser[];
   posts: any[];
