@@ -7,11 +7,9 @@ import { openNotification } from "../../utils/notifications";
 export interface ISearchState {
   searchInput: string;
   users: IUser[];
-  posts: any[];
   isLoading: boolean;
   totalCount: number;
   page: number;
-  status: string;
 }
 
 export const searchUsers = createAsyncThunk(
@@ -38,8 +36,6 @@ const searchSlice = createSlice({
   name: "search",
   initialState: {
     searchInput: "",
-    posts: [],
-    status: "",
     users: [],
     isLoading: false,
     totalCount: 0,
