@@ -14,7 +14,6 @@ interface ResultsProps {}
 
 const Results: FunctionComponent<ResultsProps> = () => {
   const maxResults = useRef(1000);
-  // const [currentPage, setCurrentPage] = useState<number>(1);
   const columns: ColumnsType<IUser> = [
     {
       title: "Avatar URL",
