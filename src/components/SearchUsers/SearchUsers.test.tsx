@@ -7,7 +7,7 @@ import SearchUsers from "./SearchUsers";
 import { findByTestId } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { fireEvent } from "@testing-library/react";
-import axios from "axios";
+import settings from "../../config/settings";
 
 // workaround to remove window.matchMedia error:
 // https://jestjs.io/docs/manual-mocks#mocking-methods-which-are-not-implemented-in-jsdom
@@ -23,7 +23,7 @@ window.matchMedia = (query) => ({
 });
 
 export const handlers = [
-  rest.get("https://api.github.com/search/users", (req, res, ctx) => {
+  rest.get(`${settings.baseApiUrl}/search/users`, (req, res, ctx) => {
     return res(
       ctx.json({
         items: [
