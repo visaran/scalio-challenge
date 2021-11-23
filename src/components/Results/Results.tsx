@@ -1,7 +1,11 @@
 import React, { FunctionComponent, useEffect, useRef, useState } from "react";
 import { Table } from "antd";
 import { useSelector } from "react-redux";
-import { searchSelector, searchUsers } from "../Search/Search.slice";
+import {
+  searchUsers,
+  searchUsersSelector,
+  updatePage,
+} from "../SearchUsers/SearchUsers.slice";
 import { ColumnsType } from "antd/lib/table";
 import { IUser } from "../../types/user";
 import { useAppDispatch } from "../../store";
@@ -10,7 +14,7 @@ interface ResultsProps {}
 
 const Results: FunctionComponent<ResultsProps> = () => {
   const maxResults = useRef(1000);
-  const [currentPage, setCurrentPage] = useState<number>(1);
+  // const [currentPage, setCurrentPage] = useState<number>(1);
   const columns: ColumnsType<IUser> = [
     {
       title: "Avatar URL",
@@ -31,24 +35,22 @@ const Results: FunctionComponent<ResultsProps> = () => {
   ];
 
   const dispatch = useAppDispatch();
-  const { users, totalCount, isLoading, searchInput } =
-    useSelector(searchSelector);
-
-  useEffect(() => {
-    console.log("montou");
-    return () => {
-      console.log("desmontou");
-    };
-  }, []);
+  const {
+    users,
+    totalCount,
+    isLoading,
+    searchInput,
+    page: currentPage,
+  } = useSelector(searchUsersSelector);
 
   const onPageChange = async (page: number) => {
+    dispatch(updatePage(page));
     dispatch(
       searchUsers({
         login: searchInput,
         page,
       })
     );
-    setCurrentPage(page);
   };
 
   if (!users.length) return null;
@@ -67,7 +69,6 @@ const Results: FunctionComponent<ResultsProps> = () => {
           onChange: onPageChange,
           hideOnSinglePage: true,
         }}
-        // onChange={onTableChange}
         loading={{ spinning: isLoading }}
         dataSource={users}
       />

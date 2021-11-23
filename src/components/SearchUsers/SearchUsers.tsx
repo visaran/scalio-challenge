@@ -5,7 +5,8 @@ import Search from "../../components/Search/Search";
 import {
   searchUsers,
   updateSearchInput,
-} from "../../components/Search/Search.slice";
+  updatePage,
+} from "./SearchUsers.slice";
 
 export const SearchUsers: FunctionComponent = () => {
   const [login, setLogin] = useState<string>("");
@@ -17,6 +18,7 @@ export const SearchUsers: FunctionComponent = () => {
 
   const onSearch = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    dispatch(updatePage(1));
     dispatch(updateSearchInput(login));
     dispatch(searchUsers({ login, page: 1 }));
   };

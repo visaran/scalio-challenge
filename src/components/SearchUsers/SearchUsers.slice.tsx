@@ -45,6 +45,9 @@ const searchSlice = createSlice({
     updateSearchInput(state, action) {
       state.searchInput = action.payload;
     },
+    updatePage(state, action) {
+      state.page = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(searchUsers.pending, (state) => {
@@ -67,8 +70,8 @@ const searchSlice = createSlice({
   },
 });
 
-export const { updateSearchInput } = searchSlice.actions;
+export const { updateSearchInput, updatePage } = searchSlice.actions;
 
-export const searchSelector = (state: RootState) => state.search;
+export const searchUsersSelector = (state: RootState) => state.search;
 
 export default searchSlice.reducer;
