@@ -1,7 +1,7 @@
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
 import { useDispatch } from "react-redux";
 
-import searchUserReducer from "./components/Search/Search.slice";
+import searchUserReducer from "./components/SearchUsers/SearchUsers.slice";
 
 const store = configureStore({
   reducer: {

@@ -1,6 +1,6 @@
 import { render, cleanup, getByTestId, fireEvent } from "../../test-utils";
 import { IUser } from "../../types/user";
-import reducer, { updateSearchInput } from "./Search.slice";
+import reducer, { updateSearchInput } from "../SearchUsers/SearchUsers.slice";
 import { rest } from "msw";
 import { setupServer } from "msw/node";
 import Search from "./Search";

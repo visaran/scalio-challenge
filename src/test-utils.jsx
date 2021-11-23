@@ -4,7 +4,7 @@ import { render as rtlRender } from "@testing-library/react";
 import { configureStore } from "@reduxjs/toolkit";
 import { Provider } from "react-redux";
 // Import your own reducer
-import searchReducer from "./components/Search/Search.slice";
+import searchUsersReducer from "./components/SearchUsers/SearchUsers.slice";
 
 function render(
   ui,
@@ -12,7 +12,7 @@ function render(
     preloadedState,
     store = configureStore({
       reducer: {
-        search: searchReducer,
+        search: searchUsersReducer,
       },
     }),
     ...renderOptions
