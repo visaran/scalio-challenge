@@ -1,5 +1,6 @@
 import axios from "axios";
+import settings from "../config/settings";
 
 export const apiClient = axios.create({
-  baseURL: "https://api.github.com/",
+  baseURL: settings.baseApiUrl,
 });
