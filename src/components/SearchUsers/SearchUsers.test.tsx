@@ -9,7 +9,8 @@ import userEvent from "@testing-library/user-event";
 import { fireEvent } from "@testing-library/react";
 import axios from "axios";
 
-// delete window.matchMedia;
+// workaround to remove window.matchMedia error:
+// https://jestjs.io/docs/manual-mocks#mocking-methods-which-are-not-implemented-in-jsdom
 window.matchMedia = (query) => ({
   matches: false,
   media: query,
