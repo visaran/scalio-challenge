@@ -1,5 +1,5 @@
 const settings = {
-  baseApiUrl: "https://api.realworld.io/api/",
+  baseApiUrl: "https://api.github.com",
 };
 
 export default settings;
