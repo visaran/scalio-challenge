@@ -11,8 +11,6 @@ afterEach(cleanup);
 
 const initialState = {
   searchInput: "",
-  posts: [],
-  status: "",
   users: [],
   isLoading: false,
   totalCount: 0,

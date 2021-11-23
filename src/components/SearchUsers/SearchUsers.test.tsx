@@ -1,9 +1,9 @@
 import { render, cleanup, getByTestId, fireEvent } from "../../test-utils";
 import { IUser } from "../../types/user";
-import reducer, { updateSearchInput } from "./Search.slice";
+import reducer, { updateSearchInput } from "./SearchUsers.slice";
 import { rest } from "msw";
 import { setupServer } from "msw/node";
-import HomePage from "./HomePage";
+import SearchUsers from "./SearchUsers";
 import { findByTestId } from "@testing-library/react";
 // import { fireEvent, getByTestId } from "@testing-library/dom";
 
@@ -35,7 +35,7 @@ afterEach(() => server.resetHandlers());
 afterAll(() => server.close());
 
 it("fetches a list of users after clicking the submit button", async () => {
-  const { findByTestId, findByText } = render(<HomePage />);
+  const { findByTestId, findByText } = render(<SearchUsers />);
   fireEvent.submit(await findByTestId("search-form"));
   // expect(await findByText("visaran")).toBeInTheDocument();
 });

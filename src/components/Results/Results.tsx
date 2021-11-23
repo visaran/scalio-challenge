@@ -31,7 +31,7 @@ const Results: FunctionComponent<ResultsProps> = () => {
   ];
 
   const dispatch = useAppDispatch();
-  const { users, totalCount, isLoading, status, searchInput } =
+  const { users, totalCount, isLoading, searchInput } =
     useSelector(searchSelector);
 
   useEffect(() => {
