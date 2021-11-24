@@ -1,5 +1,5 @@
-import React, { Fragment, FunctionComponent, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { FunctionComponent, useState } from "react";
+import { useDispatch } from "react-redux";
 import Results from "../../components/Results/Results";
 import Search from "../../components/Search/Search";
 import {
