@@ -24,10 +24,10 @@ export const SearchUsers: FunctionComponent = () => {
   };
 
   return (
-    <Fragment>
+    <div style={{ maxWidth: 1200, margin: "auto" }}>
       <Search login={login} onChange={handleQueryChange} onSearch={onSearch} />
       <Results />
-    </Fragment>
+    </div>
   );
 };
 
