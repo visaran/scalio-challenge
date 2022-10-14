@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { userService } from "../../services/userService";
 import { RootState } from "../../store";
-import { IUser } from "../../types/user";
+import { IUser } from "../../entities/User";
 import { openNotification } from "../../utils/notifications";
 
 export interface ISearchState {

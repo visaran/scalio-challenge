@@ -7,7 +7,7 @@ import {
   updatePage,
 } from "../SearchUsers/SearchUsers.slice";
 import { ColumnsType } from "antd/lib/table";
-import { IUser } from "../../types/user";
+import { IUser } from "../../entities/User";
 import { useAppDispatch } from "../../store";
 
 interface ResultsProps {}
@@ -18,7 +18,7 @@ const Results: FunctionComponent<ResultsProps> = () => {
     {
       title: "Avatar URL",
       defaultSortOrder: "descend",
-      sorter: (a, b) => a.avatar_url.localeCompare(b.avatar_url),
+      sorter: (a: any, b) => a.avatar_url.localeCompare(b.avatar_url),
       dataIndex: "avatar_url",
     },
     {
