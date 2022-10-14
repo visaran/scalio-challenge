@@ -1,3 +1,8 @@
+# About
+
+This project consists on searching users through the github API, when you type the username into the search field.
+You can also sort the table by the given headers.
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
