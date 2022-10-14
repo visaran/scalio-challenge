@@ -1,13 +1,5 @@
-import { render, cleanup, getByTestId, fireEvent } from "../../test-utils";
-import { IUser } from "../../types/user";
+import { IUser } from "../../entities/User";
 import reducer, { updateSearchInput } from "../SearchUsers/SearchUsers.slice";
-import { rest } from "msw";
-import { setupServer } from "msw/node";
-import Search from "./Search";
-import { findByTestId } from "@testing-library/react";
-// import { fireEvent, getByTestId } from "@testing-library/dom";
-
-afterEach(cleanup);
 
 const initialState = {
   searchInput: "",

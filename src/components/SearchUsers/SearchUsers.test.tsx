@@ -1,10 +1,9 @@
-import { render, cleanup, getByTestId } from "../../test-utils";
-import { IUser } from "../../types/user";
+import { render } from "../../test-utils";
+import { IUser } from "../../entities/User";
 import reducer, { updatePage, updateSearchInput } from "./SearchUsers.slice";
 import { rest } from "msw";
 import { setupServer } from "msw/node";
 import SearchUsers from "./SearchUsers";
-import { findByTestId } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { fireEvent } from "@testing-library/react";
 import settings from "../../config/settings";
