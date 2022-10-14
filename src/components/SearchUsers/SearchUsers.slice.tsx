@@ -48,34 +48,37 @@ const searchSlice = createSlice({
     page: 1,
   } as ISearchState,
   reducers: {
-    updateSearchInput(state, action: PayloadAction<string>) {
+    updateSearchInput: (state: ISearchState, action: PayloadAction<string>) => {
       state.searchInput = action.payload;
     },
-    updatePage(state, action: PayloadAction<number>) {
+    updatePage: (state: ISearchState, action: PayloadAction<number>) => {
       state.page = action.payload;
     },
   },
-  extraReducers: (builder) => {
-    builder.addCase(searchUsers.pending, (state) => {
+  extraReducers: (builder: any) => {
+    builder.addCase(searchUsers.pending, (state: ISearchState) => {
       state.isLoading = true;
     });
     builder.addCase(
       searchUsers.fulfilled,
-      (state, action: PayloadAction<ISearchFulfilled>) => {
+      (state: ISearchState, action: PayloadAction<ISearchFulfilled>) => {
         state.isLoading = false;
         state.users = [...action.payload.items];
         state.totalCount = action.payload.total_count;
       }
     );
-    builder.addCase(searchUsers.rejected, (state, action) => {
-      state.isLoading = false;
-      console.error(action.error);
-      openNotification({
-        message: "Error",
-        description:
-          "There was an error on the server. Trained monkeys are working to fix the issue.",
-      });
-    });
+    builder.addCase(
+      searchUsers.rejected,
+      (state: ISearchState, action: any) => {
+        state.isLoading = false;
+        console.error(action.error);
+        openNotification({
+          message: "Error",
+          description:
+            "There was an error on the server. Trained monkeys are working to fix the issue.",
+        });
+      }
+    );
   },
 });
 
